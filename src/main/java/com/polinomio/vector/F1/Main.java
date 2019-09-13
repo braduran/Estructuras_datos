@@ -36,7 +36,11 @@ public class Main {
 
             break;
             case "5":
-
+            	grado = Integer.parseInt(mostrarMansaje("Ingrese el grado del segundo polinomio"));
+                PolvF1 B1 = new PolvF1(grado);
+                numeroTerminos = Integer.parseInt(mostrarMansaje("Ingrese numero de terminos"));
+                insertarTerminos(B1, numeroTerminos);
+                A.dividir(B1);
             break;
 
             default:

@@ -29,6 +29,10 @@ public class PolvF1 {
     public int getPosicion(int i){
         return (int) vec[0] + 1 - i;
     }
+    
+    public int getGrado() {
+    	return (int) vec[0];
+    }
    
     //Mostrar el polinomio
     public String mostrar(){
@@ -170,5 +174,31 @@ public class PolvF1 {
             }
         }
         return R;
+    }
+    
+    public PolvF1 dividir(PolvF1 B) {
+    	//Clonar objeto
+    	PolvF1 aux = new PolvF1(this.n);
+		aux.vec = vec;
+    	
+    	while(getGrado() >= B.getGrado()) {
+    		int coef1 = (int) ((int) getDato(0) / B.getDato(0));
+    		int exp1 = getPosicion(1) - B.getPosicion(1);
+    		
+    		for (int i = 1; i < B.getDimension(); i++) {
+				int coef2 = coef1 * (int) B.getDato(i);
+				int exp2 = exp1 + (int) B.getPosicion(i);
+				this.insertarTerm(coef2, exp2);
+			}
+    		
+    		for (int j = 1; j < aux.getDimension(); j++) {
+				int grado = (int) getDato(0);
+				int coef = aux.getPosicion(grado);
+				
+				int restaCoef = (int) ((int) getDato(coef) - getDato(j));
+			}
+    	}
+    	
+    	return null;
     }
 }
