@@ -40,7 +40,8 @@ public class Main {
                 PolvF1 B1 = new PolvF1(grado);
                 numeroTerminos = Integer.parseInt(mostrarMansaje("Ingrese numero de terminos"));
                 insertarTerminos(B1, numeroTerminos);
-                A.dividir(B1);
+                PolvF1 C1 = A.dividir(B1);
+                C1.mostrar();
             break;
 
             default:

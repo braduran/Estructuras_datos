@@ -177,28 +177,42 @@ public class PolvF1 {
     }
     
     public PolvF1 dividir(PolvF1 B) {
-    	//Clonar objeto
-    	PolvF1 aux = new PolvF1(this.n);
-		aux.vec = vec;
+    	PolvF1 aux = new PolvF1(0);
+    	PolvF1 resultado = new PolvF1(0);
+    	
+    	float[] arrayVacio = new float[0];
     	
     	while(getGrado() >= B.getGrado()) {
     		int coef1 = (int) ((int) getDato(0) / B.getDato(0));
     		int exp1 = getPosicion(1) - B.getPosicion(1);
     		
+    		aux.eliminar(aux.vec);
     		for (int i = 1; i < B.getDimension(); i++) {
 				int coef2 = coef1 * (int) B.getDato(i);
-				int exp2 = exp1 + (int) B.getPosicion(i);
-				this.insertarTerm(coef2, exp2);
+				if(coef2 != 0) {
+					int exp2 = exp1 + (int) B.getPosicion(i);
+					aux.insertarTerm(coef2, exp2);
+				}
 			}
     		
-    		for (int j = 1; j < aux.getDimension(); j++) {
-				int grado = (int) getDato(0);
-				int coef = aux.getPosicion(grado);
+    		resultado.eliminar(arrayVacio);
+    		for (int j = 1; j < getDimension(); j++) {    							
+				int expOriginal = (int) getPosicion(j);
+				int expResultado = (int) aux.getPosicion(j);
 				
-				int restaCoef = (int) ((int) getDato(coef) - getDato(j));
+				int coefOriginal = (int) getDato(j);
+				int coefResultado = (int) aux.getDato(j);
+				
+				if(expOriginal == expResultado && coefOriginal != 0) {
+					int rsCoef =  coefOriginal - coefResultado;
+					resultado.insertarTerm(rsCoef, expOriginal);
+				}				
 			}
+    		resultado.ajustar();
+    		this.vec = resultado.vec;
+    		this.n = resultado.n;
     	}
-    	
-    	return null;
+    	aux.vec = vec;
+    	return aux;
     }
 }
