@@ -41,7 +41,7 @@ public class Main {
                 numeroTerminos = Integer.parseInt(mostrarMansaje("Ingrese numero de terminos"));
                 insertarTerminos(B1, numeroTerminos);
                 PolvF1 C1 = A.dividir(B1);
-                C1.mostrar();
+                JOptionPane.showMessageDialog(null, C1.mostrar());
             break;
 
             default:

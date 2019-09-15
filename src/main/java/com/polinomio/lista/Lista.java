@@ -10,34 +10,32 @@ public class Lista {
     }
     
     public void insertarTerm(float coef, int exp){
-        Nodo q = cabeza, anterior = null, nuevo = null;
+        Nodo nodo = new Nodo(coef, exp);
+        Nodo anterior = null;
         
-        while (q != null && q.getExp() > exp) {            
-            anterior = q;
-            q = q.getLiga();
-        }
-        
-        if(q != null && q.getExp() == exp){
-            q.setCoef(q.getCoef() + coef);
-            
-            if(q.getCoef() == 0){
-                anterior = q.getLiga();
-                q = null;
-            }
-            
-        }else{
-            if(q == cabeza){
-                anterior = new Nodo(coef, exp);
-                anterior.setLiga(q);
-            }else if(q.getExp() < exp){
-                nuevo = new Nodo(coef, exp);
-                q.setLiga(nuevo);
-            }else{
-                nuevo = new Nodo(coef, exp);
-                q.setLiga(nuevo);
-                nuevo.setLiga(q.getLiga());
-            }
-        }
+        if(cabeza == null) {
+        	nodo.setLiga(cabeza);
+        	cabeza = nodo;
+        }else if(cabeza.getLiga() == null){        	
+       		cabeza.setLiga(nodo);
+    	}else {
+    		
+        	if(cabeza.getExp() == exp) {
+        		cabeza.setCoef(cabeza.getCoef() + coef);
+        	}else if(exp > cabeza.getExp()) {
+        		nodo.setLiga(cabeza);
+        		cabeza = nodo;
+        	}else if(exp < cabeza.getExp()){
+        		Nodo puntero = cabeza;
+        		puntero = puntero.getLiga();
+        		while (puntero != null && exp < puntero.getExp()) {
+        			anterior = puntero;
+        			puntero = puntero.getLiga();
+				}
+        		nodo.setLiga(puntero);
+        		anterior.setLiga(nodo);
+	        }
+    	}
     }
     
     public void mostrar(){
@@ -58,5 +56,16 @@ public class Lista {
         }
         salida += "</html>";
         JOptionPane.showMessageDialog(null, salida);
+    }
+    
+    public void ingresarTerminos(int cantidadTerm){
+        float coef;
+        int exp;
+        
+        for (int i = 0; i < cantidadTerm; i++) {
+            exp = Integer.parseInt(JOptionPane.showInputDialog("Ingrese exponente"));
+            coef = Float.parseFloat(JOptionPane.showInputDialog("Ingrese coeficiente"));
+            this.insertarTerm(coef, exp);
+        }
     }
 }

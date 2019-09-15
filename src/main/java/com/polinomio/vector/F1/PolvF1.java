@@ -33,6 +33,12 @@ public class PolvF1 {
     public int getGrado() {
     	return (int) vec[0];
     }
+    
+    public PolvF1 copia() {
+    	PolvF1 copia = new PolvF1((int) vec[0]);
+    	copia.vec = vec;
+    	return copia;
+    }
    
     //Mostrar el polinomio
     public String mostrar(){
@@ -177,42 +183,34 @@ public class PolvF1 {
     }
     
     public PolvF1 dividir(PolvF1 B) {
-    	PolvF1 aux = new PolvF1(0);
-    	PolvF1 resultado = new PolvF1(0);
+    	int expt, posR, expA, posA;
+    	float coet, coeA;
+    	PolvF1 R = null;
     	
-    	float[] arrayVacio = new float[0];
-    	
-    	while(getGrado() >= B.getGrado()) {
-    		int coef1 = (int) ((int) getDato(0) / B.getDato(0));
-    		int exp1 = getPosicion(1) - B.getPosicion(1);
+    	if (vec[0] >= B.getDato(0)) {
+    		PolvF1 copia = this.copia();
     		
-    		aux.eliminar(aux.vec);
-    		for (int i = 1; i < B.getDimension(); i++) {
-				int coef2 = coef1 * (int) B.getDato(i);
-				if(coef2 != 0) {
-					int exp2 = exp1 + (int) B.getPosicion(i);
-					aux.insertarTerm(coef2, exp2);
+			int grado = (int) vec[0] - (int) B.getDato(0);
+			R = new PolvF1(grado);
+    	
+	    	while (copia.getDato(0) >= B.getDato(0)) {
+	    		expt = (int) copia.getDato(0) - (int) B.getDato(0);
+	    		coet = (int) copia.getDato(1) / (int) B.getDato(1);
+	    		posR = (int) R.getDato(0) + 1 - expt;
+	    		R.setDato(posR, coet);
+	    		
+	    		for (int k = 1; k < (B.getDato(0) + 2); k++) {
+					expA = expt + (int) B.getDato(0) + 1 - k;
+					coeA = coet * (int) B.getDato(k);
+					posA = (int) copia.getDato(0) + 1 - expA;
+					copia.setDato(posA, copia.getDato(posA) - coeA);
 				}
+	    		copia.ajustar();
 			}
-    		
-    		resultado.eliminar(arrayVacio);
-    		for (int j = 1; j < getDimension(); j++) {    							
-				int expOriginal = (int) getPosicion(j);
-				int expResultado = (int) aux.getPosicion(j);
-				
-				int coefOriginal = (int) getDato(j);
-				int coefResultado = (int) aux.getDato(j);
-				
-				if(expOriginal == expResultado && coefOriginal != 0) {
-					int rsCoef =  coefOriginal - coefResultado;
-					resultado.insertarTerm(rsCoef, expOriginal);
-				}				
-			}
-    		resultado.ajustar();
-    		this.vec = resultado.vec;
-    		this.n = resultado.n;
+    	}else {
+    		System.out.println("No se puede dividir...");
     	}
-    	aux.vec = vec;
-    	return aux;
+    	
+    	return R;
     }
 }
