@@ -14,27 +14,31 @@ public class Lista {
         Nodo anterior = null;
         
         if(cabeza == null) {
-        	nodo.setLiga(cabeza);
-        	cabeza = nodo;
+            nodo.setLiga(cabeza);
+            cabeza = nodo;
         }else if(cabeza.getLiga() == null){        	
-       		cabeza.setLiga(nodo);
+            cabeza.setLiga(nodo);
     	}else {
-    		
-        	if(cabeza.getExp() == exp) {
-        		cabeza.setCoef(cabeza.getCoef() + coef);
-        	}else if(exp > cabeza.getExp()) {
-        		nodo.setLiga(cabeza);
-        		cabeza = nodo;
-        	}else if(exp < cabeza.getExp()){
-        		Nodo puntero = cabeza;
-        		puntero = puntero.getLiga();
-        		while (puntero != null && exp < puntero.getExp()) {
-        			anterior = puntero;
-        			puntero = puntero.getLiga();
-				}
-        		nodo.setLiga(puntero);
-        		anterior.setLiga(nodo);
-	        }
+            if(cabeza.getExp() == exp) {
+                cabeza.setCoef(cabeza.getCoef() + coef);
+            }else if(exp > cabeza.getExp()) {
+                nodo.setLiga(cabeza);
+                cabeza = nodo;
+            }else if(exp < cabeza.getExp()){
+                Nodo puntero = cabeza;
+                puntero = puntero.getLiga();
+                while ((puntero != null) && (exp < puntero.getExp())) {
+                    anterior = puntero;
+                    puntero = puntero.getLiga();
+                }
+                if(puntero != null && exp == puntero.getExp()){
+                    puntero.setCoef(coef + puntero.getCoef());
+                }else{
+                    nodo.setLiga(puntero);
+                    anterior.setLiga(nodo);
+                }
+                
+            }
     	}
     }
     
@@ -47,9 +51,9 @@ public class Lista {
         }else{
             while(q != null){
                 if(q.getCoef() > 0 && q != cabeza){
-                    salida += "+";
+                    salida += "+" + q.getCoef() + "x" + "<sup>" + q.getExp() + "</sup>";
                 }else{
-                    salida += q.getCoef() + "<sup>" + q.getExp() + "</sup>";
+                    salida += q.getCoef() + "x" + "<sup>" + q.getExp() + "</sup>";
                 }
                 q = q.getLiga();
             }

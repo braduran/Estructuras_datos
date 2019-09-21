@@ -9,5 +9,5 @@ public class Main {
         Lista list = new Lista();
         list.ingresarTerminos(cantTerm);
         list.mostrar();
-	}
+    }
 }

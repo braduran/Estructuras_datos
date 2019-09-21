@@ -26,7 +26,7 @@ public class PolvF1 {
       return n;  
     }
     
-    public int getPosicion(int i){
+    public int getPOE(int i){
         return (int) vec[0] + 1 - i;
     }
     
@@ -133,7 +133,7 @@ public class PolvF1 {
             System.out.println("El exponente no es valido...");
         }else{
             if(exp <= getDato(0)){
-               pos = this.getPosicion(exp);
+               pos = this.getPOE(exp);
                vec[pos] = (int) (this.getDato(pos) + coeficiente);
                this.ajustar();
             }else{
@@ -158,22 +158,22 @@ public class PolvF1 {
         int dimensionB = B.getDimension();
         
         while (k < dimensionA && j < dimensionB) {            
-            expA = this.getPosicion(k);
-            expB = B.getPosicion(j);
+            expA = this.getPOE(k);
+            expB = B.getPOE(j);
             
             if(expA == expB){
-               posR = R.getPosicion(expA);
+               posR = R.getPOE(expA);
                sumaCoeficientes = (int) (this.getDato(k) + B.getDato(j));
                R.setDato(posR, sumaCoeficientes);
                k++;
                j++;
             }else{
                 if(expA > expB){
-                    posR = R.getPosicion(expA);
+                    posR = R.getPOE(expA);
                     R.setDato(posR, this.getDato(k));
                     k++;
                 }else{
-                    posR = R.getPosicion(expB);
+                    posR = R.getPOE(expB);
                     R.setDato(posR, B.getDato(j));
                     j++;
                 }
@@ -188,29 +188,28 @@ public class PolvF1 {
     	PolvF1 R = null;
     	
     	if (vec[0] >= B.getDato(0)) {
-    		PolvF1 copia = this.copia();
-    		
-			int grado = (int) vec[0] - (int) B.getDato(0);
-			R = new PolvF1(grado);
-    	
-	    	while (copia.getDato(0) >= B.getDato(0)) {
-	    		expt = (int) copia.getDato(0) - (int) B.getDato(0);
-	    		coet = (int) copia.getDato(1) / (int) B.getDato(1);
-	    		posR = (int) R.getDato(0) + 1 - expt;
-	    		R.setDato(posR, coet);
-	    		
-	    		for (int k = 1; k < (B.getDato(0) + 2); k++) {
-					expA = expt + (int) B.getDato(0) + 1 - k;
-					coeA = coet * (int) B.getDato(k);
-					posA = (int) copia.getDato(0) + 1 - expA;
-					copia.setDato(posA, copia.getDato(posA) - coeA);
-				}
-	    		copia.ajustar();
-			}
+            PolvF1 copia = this.copia();
+
+            int grado = (int) vec[0] - (int) B.getDato(0);
+            R = new PolvF1(grado);
+
+            while (copia.getDato(0) >= B.getDato(0)) {
+                expt = (int) copia.getDato(0) - (int) B.getDato(0);
+                coet = (int) copia.getDato(1) / (int) B.getDato(1);
+                posR = (int) R.getDato(0) + 1 - expt;
+                R.setDato(posR, coet);
+
+                for (int k = 1; k < (B.getDato(0) + 2); k++) {
+                    expA = expt + (int) B.getDato(0) + 1 - k;
+                    coeA = coet * (int) B.getDato(k);
+                    posA = (int) copia.getDato(0) + 1 - expA;
+                    copia.setDato(posA, copia.getDato(posA) - coeA);
+                }
+                copia.ajustar();
+            }
     	}else {
-    		System.out.println("No se puede dividir...");
+            System.out.println("No se puede dividir...");
     	}
-    	
     	return R;
     }
 }

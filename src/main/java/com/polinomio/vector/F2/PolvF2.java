@@ -2,10 +2,6 @@ package com.polinomio.vector.F2;
 
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author sala311
- */
 public class PolvF2 {
 
     private int n;
@@ -88,6 +84,60 @@ public class PolvF2 {
         //Aqui se libera la memoria
         vec = aux;
     }
+    
+    public float evaluar(float x){
+        int elevarVariable, resultadoDeTermino, resultadoTotal = 0;
+        
+        for (int i = 1; i < n; i+=2) {
+            elevarVariable = (int) Math.pow(x,  vec[i]);
+            resultadoDeTermino = (int) vec[i+1] * elevarVariable;
+            resultadoTotal += resultadoDeTermino;
+        }
+        return resultadoTotal;
+    }
+    
+    /*public PolvF2 sumar(PolvF2 B){
+        int k=1, j=1, expA, expB, gm, posR, sumaCoeficientes;
+        
+        int cantTermA = (int) vec[0];
+        int cantTermB = (int) B.vec[0];
+                
+        if(cantTermA > cantTermB){
+            gm = (int) vec[0];
+        }else{
+            gm = (int) B.vec[0];
+        }
+        
+        PolvF2 R = new PolvF2(gm);
+        
+        int dimensionA = cantTermA * 2 + 1;
+        int dimensionB = cantTermB * 2 + 1;
+        
+        while (k < dimensionA && j < dimensionB) {
+            
+            expA = (int) vec[k];
+            expB = (int) B.vec[j];
+            
+            if(expA == expB){
+               posR = R.getPOE(expA);
+               sumaCoeficientes = (int) (this.getDato(k) + B.getDato(j));
+               R.setDato(posR, sumaCoeficientes);
+               k++;
+               j++;
+            }else{
+                if(expA > expB){
+                    posR = R.getPOE(expA);
+                    R.setDato(posR, this.getDato(k));
+                    k++;
+                }else{
+                    posR = R.getPOE(expB);
+                    R.setDato(posR, B.getDato(j));
+                    j++;
+                }
+            }
+        }
+        return R;
+    }*/
     
     public void ingresarTerminos(int cantidadTerm){
         float coef;
