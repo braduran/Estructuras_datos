@@ -96,8 +96,8 @@ public class PolvF2 {
         return resultadoTotal;
     }
     
-    /*public PolvF2 sumar(PolvF2 B){
-        int k=1, j=1, expA, expB, gm, posR, sumaCoeficientes;
+    public PolvF2 sumar(PolvF2 B){
+        int k=1, j=1, expA, expB, gm, sumaCoeficientes;
         
         int cantTermA = (int) vec[0];
         int cantTermB = (int) B.vec[0];
@@ -110,8 +110,8 @@ public class PolvF2 {
         
         PolvF2 R = new PolvF2(gm);
         
-        int dimensionA = cantTermA * 2 + 1;
-        int dimensionB = cantTermB * 2 + 1;
+        int dimensionA = cantTermA * 2;
+        int dimensionB = cantTermB * 2;
         
         while (k < dimensionA && j < dimensionB) {
             
@@ -119,25 +119,22 @@ public class PolvF2 {
             expB = (int) B.vec[j];
             
             if(expA == expB){
-               posR = R.getPOE(expA);
-               sumaCoeficientes = (int) (this.getDato(k) + B.getDato(j));
-               R.setDato(posR, sumaCoeficientes);
-               k++;
-               j++;
+               sumaCoeficientes =  (int) (vec[k+1] + B.vec[j+1]);
+               R.almacenarTerm(sumaCoeficientes, expA);
+               k+=2;
+               j+=2;
             }else{
                 if(expA > expB){
-                    posR = R.getPOE(expA);
-                    R.setDato(posR, this.getDato(k));
-                    k++;
+                    R.almacenarTerm(vec[k+1], expA);
+                    k+=2;
                 }else{
-                    posR = R.getPOE(expB);
-                    R.setDato(posR, B.getDato(j));
-                    j++;
+                    R.almacenarTerm(B.vec[j+1], expB);
+                    j+=2;
                 }
             }
         }
         return R;
-    }*/
+    }
     
     public void ingresarTerminos(int cantidadTerm){
         float coef;
