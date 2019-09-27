@@ -20,14 +20,21 @@ public class Main {
                 JOptionPane.showMessageDialog(null, "Resultado final: " + A.evaluar(variable));
             break;
             case "3":
-            	int cantTermSegundo = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese numero de terminos segundo polinomio"));
+                int cantTermSegundo = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese numero de terminos segundo polinomio"));
                 PolvF2 B = new PolvF2(cantTermSegundo);
                 B.ingresarTerminos(cantTermSegundo);
                 
                 PolvF2 C = A.sumar(B);
                 C.mostrar();
             break;
-
+            case "5":
+                int cantTerm2 = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese numero de terminos segundo polinomio"));
+                PolvF2 B1 = new PolvF2(cantTerm2);
+                B1.ingresarTerminos(cantTerm2);
+                
+                PolvF2 C1 = A.dividir(B1);
+                C1.mostrar();
+            break;
             default:
                 JOptionPane.showMessageDialog(null, "¡¡ Hasta luego !!");
             break;
