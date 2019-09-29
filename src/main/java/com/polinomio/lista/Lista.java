@@ -62,6 +62,18 @@ public class Lista {
         JOptionPane.showMessageDialog(null, salida);
     }
     
+    public float evaluar(int x) {
+    	float elevar, resultadoTotal = 0;
+    	Nodo puntero = cabeza;
+    	
+    	while (puntero != null) {
+    		elevar = (float) Math.pow(x, puntero.getExp());
+    		resultadoTotal += elevar * puntero.getCoef();
+    		puntero = puntero.getLiga();
+		}
+    	return resultadoTotal;
+    }
+    
     public void ingresarTerminos(int cantidadTerm){
         float coef;
         int exp;

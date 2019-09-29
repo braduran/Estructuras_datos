@@ -49,40 +49,13 @@ public class PolvF2 {
     }
     
     public void insertarTerm(float coef, int exp){
-        /*int k=1,j;
-        int cantDatosUtiles = (int) vec[0] * 2 + 1;
-        while ((k < cantDatosUtiles) && (vec[k] > exp) && (vec[k+1] != 0)) {            
-            k+=2;
-        }
-        
-        if((k < cantDatosUtiles) && (vec[k] == exp)){
-            if(vec[k+1] + coef != 0){
-                vec[k+1] += coef;
-            }else{
-                for (j = k; vec[0] * 2-1 < 10; j+=2) {
-                    vec[j] = vec[j+2];
-                    vec[j+1] = vec[j+3];
-                }
-                vec[0]--;
-            }
-        }else{
-            if(cantDatosUtiles == n){
-                this.redimensionar();
-            }
-            for (j = cantDatosUtiles; j >= k; j--) {
-                vec[j+2] = vec[j];
-            }
-            vec[k] = exp;
-            vec[k+1] = coef;
-            vec[0] = vec[0] + 1;
-        }*/
     	int k = 1;
     	int dimension = (int) vec[0] * 2 + 1;
     	
     	if(exp < 0) {
     		System.out.println("El exponente no es valido...");
     	}else {
-    		while (k < dimension && vec[k] != exp && vec[k] != 0) {
+    		while (k < dimension && vec[k] > exp) {
 				k+=2;
 			}
     		
@@ -90,26 +63,19 @@ public class PolvF2 {
     			if(vec[k+1] + coef != 0){
     				vec[k+1] += coef;
                 }else{
-                    for (int j = k; j < dimension; j+=2) {
-                        vec[j] = vec[j+2];
-                        vec[j+1] = vec[j+3];
+                    for (int j = k+2; j < dimension; j++) {
+                        vec[j-2] = vec[j];
                     }
                     vec[0]--;
                 }
     		}else {
-    			if(vec[k+1] == 0) {
-    				vec[k] = exp;
-		    		vec[k+1] = coef;
-    			}else {
-	    			this.redimensionar();
-	    			for (int j = (int)vec[0]*2; j >= k; j-=2) {
-	                    vec[j] = vec[j-2];
-	                    vec[j-1] = vec[j-3];
-	                }
-		    		vec[k] = exp;
-		    		vec[k+1] = coef;
-		    		vec[0] += 1;
-    			}
+    			this.redimensionar();
+    			for (int m = (int)vec[0]*2 + 1; m >= k; m--) {
+                    vec[m+2] = vec[m];
+                }
+	    		vec[k] = exp;
+	    		vec[k+1] = coef;
+	    		vec[0] += 1;
     		}
     	}
     }
@@ -131,17 +97,17 @@ public class PolvF2 {
     }
     
     public void redimensionar(){
-        n+=2;
-        float aux[] = new float[n];
+        int dimension = (int) vec[0] * 2 + 1;
         
-        int cantDatosUtiles = (int) vec[0] * 2+1;
-        for (int i = 1;i < cantDatosUtiles; i++) {
-            aux[i] = vec[i];
+        if(dimension >= n) {
+        	n+=2;
+        	float aux[] = new float[n];
+        	
+	        for (int i = 1;i < dimension; i++) {
+	            aux[i] = vec[i];
+	        }
+	        vec = aux;
         }
-        //Aqui se libera la memoria
-        aux[0] = vec[0] + 1;
-        this.eliminar();
-        vec = aux;
     }
     
     public float evaluar(float x){
@@ -179,15 +145,15 @@ public class PolvF2 {
             
             if(expA == expB){
                sumaCoeficientes =  (int) (vec[k+1] + B.vec[j+1]);
-               R.almacenarTerm(sumaCoeficientes, expA);
+               R.insertarTerm(sumaCoeficientes, expA);
                k+=2;
                j+=2;
             }else{
                 if(expA > expB){
-                    R.almacenarTerm(vec[k+1], expA);
+                    R.insertarTerm(vec[k+1], expA);
                     k+=2;
                 }else{
-                    R.almacenarTerm(B.vec[j+1], expB);
+                    R.insertarTerm(B.vec[j+1], expB);
                     j+=2;
                 }
             }
@@ -201,20 +167,27 @@ public class PolvF2 {
         
         if(vec[1] >= B.vec[1]) {
             PolvF2 copia = this.copia();
-            R = new PolvF2((int)vec[0]);
+            R = new PolvF2((int) this.getDato(0));
             
-            while (copia.vec[1] >= B.vec[1]) {
-                coef = (int)(copia.vec[2] - B.vec[2]);
-                exp = (int)(copia.vec[1] - B.vec[1]);
-                R.almacenarTerm(coef, exp);
+            while (copia.getDato(1) >= B.getDato(1)) {
+            	exp = (int)(copia.getDato(1) - B.getDato(1));
+                coef = (int)(copia.getDato(2) / B.getDato(2));
+                R.insertarTerm(coef, exp);
                 
-                int cantDatosUtiles = (int)(B.vec[0] * 2 + 1);
+                int cantDatosUtiles = (int)(B.getDato(0) * 2 + 1);
                 for (int  k = 1; k < cantDatosUtiles; k+=2) {
-                    coefA = (int)(coef * B.vec[k+1]);
-                    expA = (int)(exp + B.vec[k]);
+                	expA = (int)(exp + B.getDato(k));
+                    coefA = (int)(coef * B.getDato(k+1));
+                    
                     copia.setDato(k, expA);
-                    copia.setDato(k+1, coefA);
+                    copia.setDato(k+1, copia.getDato(k+1) - coefA);
                 }
+                
+                int dimension = (int) copia.getDato(0) * 2 + 1;
+                for (int i = 1; i < dimension; i+=2) {
+            		copia.setDato(i, copia.getDato(i+2));
+            		copia.setDato(i+1, copia.getDato(i+3));
+				}
             }
         }else {
             System.out.println("No se puede dividir los polinomios...");
