@@ -19,6 +19,20 @@ public class Main {
 		        int variable = Integer.parseInt(JOptionPane.showInputDialog("Ingrese variable"));
 		        JOptionPane.showMessageDialog(null, "Resultado final: " + list.evaluar(variable));
 		    break;
+		    case "3":
+		    	int cantTermB = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese numero de terminos segundo polinomio"));
+		        Lista listB = new Lista();
+		        listB.ingresarTerminos(cantTermB);
+		        
+		        list.sumar(listB).mostrar();
+		    break;
+		    case "5":
+		    	int cantTermC = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese numero de terminos segundo polinomio"));
+		        Lista listC = new Lista();
+		        listC.ingresarTerminos(cantTermC);
+		        
+		        list.dividir(listC).mostrar();
+		    break;
 		    default:
 		        JOptionPane.showMessageDialog(null, "¡¡ Hasta luego !!");
 		    break;
