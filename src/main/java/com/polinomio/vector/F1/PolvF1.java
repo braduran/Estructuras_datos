@@ -1,5 +1,8 @@
 package com.polinomio.vector.F1;
 
+import com.polinomio.lista.Lista;
+import com.polinomio.vector.F2.PolvF2;
+
 public class PolvF1 {
     int n;
     float vec[];
@@ -211,5 +214,20 @@ public class PolvF1 {
             System.out.println("No se puede dividir...");
     	}
     	return R;
+    }
+    
+    public PolvF2 sumar(Lista B) {
+    	//Sumar F1 con Lista y da F2
+    	return null;
+    }
+    
+    public Lista dividir(PolvF2 B) {
+    	//Dividir F1 con F2 y da Lista
+    	return null;
+    }
+    
+    public boolean comparar(PolvF2 B) {
+    	//Comparar F1 con F2
+    	return false;
     }
 }

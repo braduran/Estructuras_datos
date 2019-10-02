@@ -2,6 +2,9 @@ package com.polinomio.lista;
 
 import javax.swing.JOptionPane;
 
+import com.polinomio.vector.F1.PolvF1;
+import com.polinomio.vector.F2.PolvF2;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -33,6 +36,14 @@ public class Main {
 		        
 		        list.dividir(listC).mostrar();
 		    break;
+		    case "6":
+		    	int cantTermF2 = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese numero de terminos PolvF2"));
+		    	PolvF2 F2 = new PolvF2(cantTermF2);
+                F2.ingresarTerminos(cantTermF2);
+                
+                PolvF1 F1 = list.dividir(F2);
+                JOptionPane.showMessageDialog(null, F1.mostrar());
+		    break;
 		    default:
 		        JOptionPane.showMessageDialog(null, "¡¡ Hasta luego !!");
 		    break;
@@ -46,6 +57,7 @@ public class Main {
 	            + "3. Sumar \n"
 	            + "4. Multiplicar \n"
 	            + "5. Dividir \n"
+	            + "6. Dividir con Polinomio F2 \n"
 	            + "0. Salir ");
 	}
 }

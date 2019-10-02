@@ -2,6 +2,9 @@ package com.polinomio.lista;
 
 import javax.swing.JOptionPane;
 
+import com.polinomio.vector.F1.PolvF1;
+import com.polinomio.vector.F2.PolvF2;
+
 public class Lista {
     private Nodo cabeza;
 
@@ -151,6 +154,40 @@ public class Lista {
     	}else {
     		System.out.println("No se puede dividir los polinomios...");
     	}
+    	return R;
+    }
+    
+    public PolvF1 dividir(PolvF2 B) {
+    	//Dividir lista entre F2 y da F1
+
+    	int exp, coef, expA, coefA;
+    	Lista copia = null;
+    	Nodo cab = cabeza;
+    	PolvF1 R = null;
+    	int expB = (int) B.getDato(1);
+    	
+    	if(cab.getExp() >= expB) {
+    		copia = this.getCopia();
+    		
+    		int grado = cab.getExp() - (int) B.getDato(1);
+            R = new PolvF1(grado);
+    		
+    		while (copia.getCabeza().getExp() >= expB) {
+    			coef = (int)(copia.getCabeza().getCoef() / B.getDato(2));
+				exp = copia.getCabeza().getExp() - (int) B.getDato(1);
+				R.insertarTerm(coef, exp);
+				
+				int cantDatosUtiles = (int)(B.getDato(0) * 2 + 1);
+                for (int  k = 1; k < cantDatosUtiles; k+=2) {
+                	expA = (int)(exp + B.getDato(k));
+                    coefA = (int)(coef * B.getDato(k+1));
+                    copia.insertarTerm(-coefA, expA);
+                }
+			}
+    	}else {
+    		System.out.println("No se puede dividir los polinomios...");
+    	}
+    	
     	return R;
     }
     
