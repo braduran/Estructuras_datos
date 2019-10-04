@@ -42,7 +42,11 @@ public class PolvF2 {
             if(coef > 0 && i > 2){
                 salida = salida + "+";
             }
-            salida = salida + coef + "x<sup>" + exp + "</sup>";
+            
+            if(coef != 0) {
+            	salida = salida + coef + "x<sup>" + exp + "</sup>";
+            }
+            
         }
         salida = salida + "</html>";
         JOptionPane.showMessageDialog(null, salida);

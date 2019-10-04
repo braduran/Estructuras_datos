@@ -1,6 +1,7 @@
 package com.polinomio.vector.F1;
 
 import com.polinomio.lista.Lista;
+import com.polinomio.lista.Nodo;
 import com.polinomio.vector.F2.PolvF2;
 
 public class PolvF1 {
@@ -218,12 +219,71 @@ public class PolvF1 {
     
     public PolvF2 sumar(Lista B) {
     	//Sumar F1 con Lista y da F2
-    	return null;
+
+    	int k=1, expA, expB, gm, sumaCoeficientes;
+    	Nodo cab = B.getCabeza();
+    	
+        if(this.getDato(0) > cab.getExp()){
+            gm = (int) this.getDato(0);
+        }else{
+            gm = (int) cab.getExp();
+        }
+        
+        PolvF2 R = new PolvF2(gm);
+        int dimensionA = this.getDimension();
+        
+        while (k < dimensionA &&  cab != null) {            
+            expA = this.getPOE(k);
+            expB = cab.getExp();
+            
+            if(expA == expB){
+               sumaCoeficientes = (int) (this.getDato(k) + cab.getCoef());
+               R.insertarTerm(sumaCoeficientes, expA);
+               k++;
+               cab = cab.getLiga();
+            }else{
+                if(expA > expB){
+                	R.insertarTerm(this.getDato(k), expA);
+                    k++;
+                }else{
+                	R.insertarTerm(cab.getCoef(), expB);
+                    cab = cab.getLiga();
+                }
+            }
+        }
+        return R;
     }
     
     public Lista dividir(PolvF2 B) {
     	//Dividir F1 con F2 y da Lista
-    	return null;
+    	
+    	int exp, expA, posA;
+    	float coef, coefA;
+    	Lista R = new Lista();
+    	
+    	if (getDato(0) >= B.getDato(0)) {
+            PolvF1 copia = this.copia();
+
+            while (copia.getDato(0) >= B.getDato(1)) {
+                exp = (int) copia.getDato(0) - (int) B.getDato(1);
+                coef = (int) copia.getDato(1) / (int) B.getDato(2);
+                R.insertarTerm(coef, exp);
+                
+                int cantDatosUtiles = (int)(B.getDato(0) * 2 + 1);
+                for (int  k = 1; k < cantDatosUtiles; k+=2) {
+                	expA = (int)(exp + B.getDato(k));
+                    coefA = (int)(coef * B.getDato(k+1));
+                    
+                    posA = (int) copia.getDato(0) + 1 - expA;
+                    copia.setDato(posA, copia.getDato(posA) - coefA);
+                }
+                
+                copia.ajustar();
+            }
+    	}else {
+            System.out.println("No se puede dividir el polinomio...");
+    	}
+    	return R;
     }
     
     public boolean comparar(PolvF2 B) {

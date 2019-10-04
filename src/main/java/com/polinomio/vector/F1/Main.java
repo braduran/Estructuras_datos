@@ -2,6 +2,9 @@ package com.polinomio.vector.F1;
 
 import javax.swing.JOptionPane;
 
+import com.polinomio.lista.Lista;
+import com.polinomio.vector.F2.PolvF2;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -30,7 +33,7 @@ public class Main {
                 numeroTerminos = Integer.parseInt(mostrarMansaje("Ingrese numero de terminos"));
                 insertarTerminos(B, numeroTerminos);
                 PolvF1 C = A.sumar(B);
-                System.out.println("Resultado de la suma: " + C.mostrar());
+                JOptionPane.showMessageDialog(null, C.mostrar());
             break;
             case "4":
 
@@ -43,6 +46,22 @@ public class Main {
                 PolvF1 C1 = A.dividir(B1);
                 JOptionPane.showMessageDialog(null, C1.mostrar());
             break;
+            
+            case "6":
+            	int numTerm = Integer.parseInt(mostrarMansaje("Ingrese numero de terminos PoLista"));
+                Lista list = new Lista();
+                list.ingresarTerminos(numTerm);
+                
+                PolvF2 F1List = A.sumar(list);
+                F1List.mostrar();
+            break;
+            case "7":
+		    	int cantTermF2 = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese numero de terminos PolvF2"));
+		    	PolvF2 F2 = new PolvF2(cantTermF2);
+                F2.ingresarTerminos(cantTermF2);
+                
+                A.dividir(F2).mostrar();
+		    break;
 
             default:
             mostrarMansaje("¡¡ Hasta luego !!");
@@ -62,6 +81,8 @@ public class Main {
                 + "3. Sumar \n"
                 + "4. Multiplicar \n"
                 + "5. Dividir \n"
+                + "6. Sumar con Polinomio Lista \n"
+                + "7. Dividir con Polinomio F2 \n"
                 + "0. Salir ");
     }
    
