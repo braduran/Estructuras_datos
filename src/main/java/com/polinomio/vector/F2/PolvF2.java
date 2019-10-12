@@ -57,30 +57,30 @@ public class PolvF2 {
     	int dimension = (int) vec[0] * 2 + 1;
     	
     	if(exp < 0) {
-    		System.out.println("El exponente no es valido...");
+            System.out.println("El exponente no es valido...");
     	}else {
-    		while (k < dimension && vec[k] > exp) {
-				k+=2;
-			}
-    		
-    		if((k < dimension) && (getDato(k) == exp)){
-    			if(vec[k+1] + coef != 0){
-    				vec[k+1] += coef;
+            while (k < dimension && vec[k] > exp) {
+                k+=2;
+            }
+
+            if((k < dimension) && (getDato(k) == exp)){
+                if(vec[k+1] + coef != 0){
+                        vec[k+1] += coef;
                 }else{
                     for (int j = k+2; j < dimension; j++) {
                         vec[j-2] = vec[j];
                     }
                     vec[0]--;
                 }
-    		}else {
-    			this.redimensionar();
-    			for (int m = (int)vec[0]*2 + 1; m >= k; m--) {
+            }else {
+                this.redimensionar();
+                for (int m = (int)vec[0]*2 + 1; m >= k; m--) {
                     vec[m+2] = vec[m];
                 }
-	    		vec[k] = exp;
-	    		vec[k+1] = coef;
-	    		vec[0] += 1;
-    		}
+                vec[k] = exp;
+                vec[k+1] = coef;
+                vec[0] += 1;
+            }
     	}
     }
     
@@ -104,13 +104,13 @@ public class PolvF2 {
         int dimension = (int) vec[0] * 2 + 1;
         
         if(dimension >= n) {
-        	n+=2;
-        	float aux[] = new float[n];
-        	
-	        for (int i = 1;i < dimension; i++) {
-	            aux[i] = vec[i];
-	        }
-	        vec = aux;
+            n+=2;
+            float aux[] = new float[n];
+
+            for (int i = 1;i < dimension; i++) {
+                aux[i] = vec[i];
+            }
+            vec = aux;
         }
     }
     

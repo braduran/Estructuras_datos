@@ -286,6 +286,23 @@ public class PolvF1 {
     	return R;
     }
     
+    public boolean comparar(PolvF1 B){
+        boolean sw = true;
+        int k;
+        
+        if(this.getDato(0) == B.getDato(0)){
+            for (k = 0; k < B.getDato(0)+2; k++) {
+                if(vec[k] != B.getDato(k)){
+                    sw = false;
+                }
+            }
+        }else{
+            sw = false;
+        }
+        
+        return sw;
+    }
+    
     public boolean comparar(PolvF2 B) {
     	//Comparar F1 con F2
     	return false;

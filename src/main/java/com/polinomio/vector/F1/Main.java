@@ -8,16 +8,9 @@ import com.polinomio.vector.F2.PolvF2;
 public class Main {
 
     public static void main(String[] args) {
-        int grado, numeroTerminos;
-        String rta;
+        PolvF1 A = nuevoPoinomio();
        
-        grado = Integer.parseInt(mostrarMansaje("Ingrese el grado del polinomio"));
-        PolvF1 A = new PolvF1(grado);
-       
-        numeroTerminos = Integer.parseInt(mostrarMansaje("Ingrese numero de terminos"));
-        insertarTerminos(A, numeroTerminos);
-       
-        rta = mostrarMenu();
+        String rta = mostrarMenu();
        
         switch (rta) {
             case "1":
@@ -28,22 +21,18 @@ public class Main {
                 JOptionPane.showMessageDialog(null, "Polinomio evaluado: " + A.evaluar(variable));
             break;
             case "3":
-                grado = Integer.parseInt(mostrarMansaje("Ingrese el grado del segundo polinomio"));
-                PolvF1 B = new PolvF1(grado);
-                numeroTerminos = Integer.parseInt(mostrarMansaje("Ingrese numero de terminos"));
-                insertarTerminos(B, numeroTerminos);
-                PolvF1 C = A.sumar(B);
-                JOptionPane.showMessageDialog(null, C.mostrar());
+                PolvF1 B = nuevoPoinomio();
+                PolvF1 B1 = A.sumar(B);
+                
+                JOptionPane.showMessageDialog(null, B1.mostrar());
             break;
             case "4":
 
             break;
             case "5":
-            	grado = Integer.parseInt(mostrarMansaje("Ingrese el grado del segundo polinomio"));
-                PolvF1 B1 = new PolvF1(grado);
-                numeroTerminos = Integer.parseInt(mostrarMansaje("Ingrese numero de terminos"));
-                insertarTerminos(B1, numeroTerminos);
-                PolvF1 C1 = A.dividir(B1);
+            	PolvF1 C = nuevoPoinomio();
+                PolvF1 C1 = A.dividir(C);
+                
                 JOptionPane.showMessageDialog(null, C1.mostrar());
             break;
             
@@ -56,15 +45,26 @@ public class Main {
                 F1List.mostrar();
             break;
             case "7":
-		    	int cantTermF2 = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese numero de terminos PolvF2"));
-		    	PolvF2 F2 = new PolvF2(cantTermF2);
+                int cantTermF2 = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese numero de terminos PolvF2"));
+                PolvF2 F2 = new PolvF2(cantTermF2);
                 F2.ingresarTerminos(cantTermF2);
                 
                 A.dividir(F2).mostrar();
-		    break;
+            break;
+            case "8":
+                PolvF1 D = nuevoPoinomio();
+                
+                if(A.comparar(D)){
+                    JOptionPane.showMessageDialog(null, D.mostrar(), 
+                            "Los polinomios son iguales",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }else{
+                    JOptionPane.showMessageDialog(null, "Los polinomios no son iguales...");
+                }
+            break;
 
             default:
-            mostrarMansaje("¡¡ Hasta luego !!");
+                mostrarMansaje("¡¡ Hasta luego !!");
             break;
             }
     }
@@ -83,18 +83,25 @@ public class Main {
                 + "5. Dividir \n"
                 + "6. Sumar con Polinomio Lista \n"
                 + "7. Dividir con Polinomio F2 \n"
+                + "8. Comparar \n"
                 + "0. Salir ");
     }
    
-    public static void insertarTerminos(PolvF1 polinomio, int numeroTerminos) {
+    public static PolvF1 nuevoPoinomio() {
         int exponente;
         float coeficiente;
+        
+        int grado = Integer.parseInt(mostrarMansaje("Ingrese el grado del polinomio"));
+        PolvF1 X = new PolvF1(grado);
+        
+        int numeroTerminos = Integer.parseInt(mostrarMansaje("Ingrese numero de terminos"));
 
         while (numeroTerminos != 0) {
             coeficiente = Float.parseFloat(mostrarMansaje("Ingresar el coeficiente"));
             exponente = Integer.parseInt(mostrarMansaje("Ingresar el exponente"));
-            polinomio.insertarTerm(coeficiente, exponente);
+            X.insertarTerm(coeficiente, exponente);
             numeroTerminos--;
         }
+        return X;
     }
 }
