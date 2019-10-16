@@ -62,9 +62,22 @@ public class Main {
                     JOptionPane.showMessageDialog(null, "Los polinomios no son iguales...");
                 }
             break;
+            case "9":
+            	int ctF2 = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese numero de terminos PolvF2"));
+                PolvF2 B2 = new PolvF2(ctF2);
+                B2.ingresarTerminos(ctF2);
+                
+                if(A.comparar(B2)){
+                    JOptionPane.showMessageDialog(null, A.mostrar(), 
+                            "Los polinomios son iguales",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }else{
+                    JOptionPane.showMessageDialog(null, "Los polinomios no son iguales...");
+                }
+            break;
 
             default:
-                mostrarMansaje("Â¡Â¡ Hasta luego !!");
+                mostrarMansaje("¡¡ Hasta luego !!");
             break;
             }
     }
@@ -84,6 +97,7 @@ public class Main {
                 + "6. Sumar con Polinomio Lista \n"
                 + "7. Dividir con Polinomio F2 \n"
                 + "8. Comparar \n"
+                + "9. Comparar con PolvF2 \n"
                 + "0. Salir ");
     }
    

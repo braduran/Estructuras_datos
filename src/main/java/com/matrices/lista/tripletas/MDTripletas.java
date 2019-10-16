@@ -35,7 +35,7 @@ public class MDTripletas {
             salida += "</tr>";
         }
         salida += "</table></html>";
-        JOptionPane.showMessageDialog(null, "Datos de 1 matriz: \n" + salida);
+        JOptionPane.showMessageDialog(null, salida, "Datos de la matriz", JOptionPane.INFORMATION_MESSAGE);
     }
     
     public void almacenarTrip(int f, int c, float d){

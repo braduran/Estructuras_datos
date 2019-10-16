@@ -233,22 +233,26 @@ public class PolvF1 {
         int dimensionA = this.getDimension();
         
         while (k < dimensionA &&  cab != null) {            
-            expA = this.getPOE(k);
-            expB = cab.getExp();
-            
-            if(expA == expB){
-               sumaCoeficientes = (int) (this.getDato(k) + cab.getCoef());
-               R.insertarTerm(sumaCoeficientes, expA);
-               k++;
-               cab = cab.getLiga();
-            }else{
-                if(expA > expB){
-                	R.insertarTerm(this.getDato(k), expA);
-                    k++;
-                }else{
-                	R.insertarTerm(cab.getCoef(), expB);
-                    cab = cab.getLiga();
-                }
+            if(this.getDato(k) != 0) {
+	        	expA = this.getPOE(k);
+	            expB = cab.getExp();
+	            
+	            if(expA == expB){
+	               sumaCoeficientes = (int) (this.getDato(k) + cab.getCoef());
+	               R.insertarTerm(sumaCoeficientes, expA);
+	               k++;
+	               cab = cab.getLiga();
+	            }else{
+	                if(expA > expB){
+	                	R.insertarTerm(this.getDato(k), expA);
+	                    k++;
+	                }else{
+	                	R.insertarTerm(cab.getCoef(), expB);
+	                    cab = cab.getLiga();
+	                }
+	            }
+            }else {
+            	k++;
             }
         }
         return R;
@@ -288,11 +292,10 @@ public class PolvF1 {
     
     public boolean comparar(PolvF1 B){
         boolean sw = true;
-        int k;
         
         if(this.getDato(0) == B.getDato(0)){
-            for (k = 0; k < B.getDato(0)+2; k++) {
-                if(vec[k] != B.getDato(k)){
+            for (int k = 0; k < B.getDato(0)+2; k++) {
+                if(this.getDato(k) != B.getDato(k)){
                     sw = false;
                 }
             }
@@ -305,6 +308,27 @@ public class PolvF1 {
     
     public boolean comparar(PolvF2 B) {
     	//Comparar F1 con F2
-    	return false;
+    	boolean sw = true;
+    	int cdUtiles, coefA, expA, coefB, expB;
+    	
+    	if(this.getDato(0) == B.getDato(1)) {
+    		cdUtiles = (int) this.getDato(0) + 2;
+    		for (int k = 1; k < cdUtiles; k++) {
+    			if(this.getDato(k) != 0) {
+	    			coefA = (int) this.getDato(k);
+	    			coefB = (int) B.getDato(k+1);
+	    			
+	    			expA = (int) this.getPOE(k);
+	    			expB = (int) B.getDato(k);
+	    			
+					if(coefA != coefB && expA != expB) {
+						sw = false;
+					}
+    			}
+    		}
+    	}else {
+    		sw = false;
+    	}
+    	return sw;
     }
 }
