@@ -220,37 +220,31 @@ public class PolvF1 {
     public PolvF2 sumar(Lista B) {
     	//Sumar F1 con Lista y da F2
 
-    	int k=1, expA, expB, gm, sumaCoeficientes;
+    	int k=1, expA, expB, sumaCoeficientes;
     	Nodo cab = B.getCabeza();
-    	
-        if(this.getDato(0) > cab.getExp()){
-            gm = (int) this.getDato(0);
-        }else{
-            gm = (int) cab.getExp();
-        }
         
-        PolvF2 R = new PolvF2(gm);
+        PolvF2 R = new PolvF2(1);
         int dimensionA = this.getDimension();
         
         while (k < dimensionA &&  cab != null) {            
             if(this.getDato(k) != 0) {
-	        	expA = this.getPOE(k);
-	            expB = cab.getExp();
+	        expA = this.getPOE(k);
+	        expB = cab.getExp();
 	            
-	            if(expA == expB){
-	               sumaCoeficientes = (int) (this.getDato(k) + cab.getCoef());
-	               R.insertarTerm(sumaCoeficientes, expA);
-	               k++;
-	               cab = cab.getLiga();
-	            }else{
-	                if(expA > expB){
-	                	R.insertarTerm(this.getDato(k), expA);
-	                    k++;
-	                }else{
-	                	R.insertarTerm(cab.getCoef(), expB);
-	                    cab = cab.getLiga();
-	                }
-	            }
+                if(expA == expB){
+                   sumaCoeficientes = (int) (this.getDato(k) + cab.getCoef());
+                   R.insertarTerm(sumaCoeficientes, expA);
+                   k++;
+                   cab = cab.getLiga();
+                }else{
+                    if(expA > expB){
+                        R.insertarTerm(this.getDato(k), expA);
+                        k++;
+                    }else{
+                        R.insertarTerm(cab.getCoef(), expB);
+                        cab = cab.getLiga();
+                    }
+                }
             }else {
             	k++;
             }
@@ -275,7 +269,7 @@ public class PolvF1 {
                 
                 int cantDatosUtiles = (int)(B.getDato(0) * 2 + 1);
                 for (int  k = 1; k < cantDatosUtiles; k+=2) {
-                	expA = (int)(exp + B.getDato(k));
+                    expA = (int)(exp + B.getDato(k));
                     coefA = (int)(coef * B.getDato(k+1));
                     
                     posA = (int) copia.getDato(0) + 1 - expA;
@@ -308,27 +302,40 @@ public class PolvF1 {
     
     public boolean comparar(PolvF2 B) {
     	//Comparar F1 con F2
-    	boolean sw = true;
-    	int cdUtiles, coefA, expA, coefB, expB;
+    	int k = 1, j = 1;
+        boolean sw = true;
+    	int coefA, expA, coefB, expB;
     	
-    	if(this.getDato(0) == B.getDato(1)) {
-    		cdUtiles = (int) this.getDato(0) + 2;
-    		for (int k = 1; k < cdUtiles; k++) {
-    			if(this.getDato(k) != 0) {
-	    			coefA = (int) this.getDato(k);
-	    			coefB = (int) B.getDato(k+1);
-	    			
-	    			expA = (int) this.getPOE(k);
-	    			expB = (int) B.getDato(k);
-	    			
-					if(coefA != coefB && expA != expB) {
-						sw = false;
-					}
-    			}
-    		}
-    	}else {
-    		sw = false;
-    	}
+        int cdUtilesA = (int) this.getDato(0) + 2;
+        int cdUtilesB = (int) B.getDato(0) * 2 + 1;
+        
+        while(k < cdUtilesA && j < cdUtilesB){
+            if(this.getDato(k) != 0){
+                coefA = (int) this.getDato(k);
+                expA = (int) this.getPOE(k);
+
+                coefB = (int) B.getDato(j+1);
+                expB = (int) B.getDato(j);
+
+                if(coefA != coefB && expA != expB) {
+                    sw = false;
+                }
+
+                k++;
+                j+=2;
+            }else{
+                k++;
+            }
+        }
+        
+        if(k != (cdUtilesA - 1)){
+            sw = false;
+        }
+        
+        if((j+1) != (cdUtilesB - 1)){
+            sw = false;
+        }
+        
     	return sw;
     }
 }

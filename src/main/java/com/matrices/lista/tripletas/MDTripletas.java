@@ -18,6 +18,13 @@ public class MDTripletas {
         listaTri[0][2] = cd;
     }
     
+    public void setDato(int f, int c, float d){
+        //this.listaTri[f][c] = d;
+        this.listaTri[f][0] = f;
+        this.listaTri[c][1] = c;
+        this.listaTri[(int)d][2] = d;
+    }
+    
     public void mostar(){
         String salida = "<html><table border='1'>";
         int t = 1;
@@ -61,6 +68,48 @@ public class MDTripletas {
             listaTri[k][0] = f;
             listaTri[k][1] = c;
             listaTri[k][2] = d;
+        }
+    }
+    
+    public void insertarTrip(int f, int c, float d){
+        int k = 1;
+        int tripUtiles = (int) listaTri[0][2] + 1;
+        
+        while ((k < tripUtiles) && (listaTri[k][0] < f) && (listaTri[k][2] != 0)) {            
+            k++;
+        }
+        
+        while ((k < tripUtiles) && (listaTri[k][0] <= f) 
+                && (listaTri[k][1] < 0) && (listaTri[0][2] != 0)) {            
+            k++;
+        }
+        
+        if((k <= tripUtiles) && (listaTri[k][0] == f) && (listaTri[k][1] == c)){
+            if((listaTri[k][2] + d) != 0){
+                listaTri[k][2] = listaTri[k][2] + d;
+            }else{
+                for (int j = k; j < listaTri[0][2]; j++) {
+                    listaTri[j][0] = listaTri[j+1][0];
+                    listaTri[j][1] = listaTri[j+1][1];
+                    listaTri[j][2] = listaTri[j+1][2];
+                }
+                listaTri[0][2] = listaTri[0][2] - 1;
+            }
+        }else{
+            if((listaTri[0][2]+1) == Nt){
+                //redimensionar
+            }
+            
+            for (int m = (int) listaTri[0][2]; m >= k; m--) {
+                listaTri[m+1][0] = listaTri[m][0];
+                listaTri[m+1][1] = listaTri[m][1];
+                listaTri[m+1][2] = listaTri[m][2];
+            }
+            listaTri[k][0] = f;
+            listaTri[k][1] = c;
+            listaTri[k][2] = d;
+            
+            listaTri[0][2] = listaTri[0][2] + 1;
         }
     }
     
