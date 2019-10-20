@@ -73,7 +73,9 @@ public class PolvF2 {
                     vec[0]--;
                 }
             }else {
-                this.redimensionar();
+            	if(((int) vec[0] * 2 + 1) == this.n){
+            		this.redimensionar();
+            	}
                 for (int m = (int)vec[0]*2 + 1; m >= k; m--) {
                     vec[m+2] = vec[m];
                 }
@@ -101,17 +103,13 @@ public class PolvF2 {
     }
     
     public void redimensionar(){
-        int dimension = (int) vec[0] * 2 + 1;
-        
-        if(dimension >= n) {
-            n+=2;
-            float aux[] = new float[n];
+        int dimension = (int) this.vec[0] * 2 + 1;
+        float aux[] = new float[n+=2];
 
-            for (int i = 1;i < dimension; i++) {
-                aux[i] = vec[i];
-            }
-            vec = aux;
+        for (int i = 1;i < dimension; i++) {
+            aux[i] = this.vec[i];
         }
+        vec = aux;
     }
     
     public float evaluar(float x){

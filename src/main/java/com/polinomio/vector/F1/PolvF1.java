@@ -219,11 +219,16 @@ public class PolvF1 {
     
     public PolvF2 sumar(Lista B) {
     	//Sumar F1 con Lista y da F2
-
-    	int k=1, expA, expB, sumaCoeficientes;
+    	int k=1, expA, expB, sumaCoeficientes, gm;
     	Nodo cab = B.getCabeza();
-        
-        PolvF2 R = new PolvF2(1);
+    	                
+        if(this.getDato(0) > cab.getExp()){
+            gm = (int) this.getDato(0);
+        }else{
+            gm = cab.getExp();
+        }
+    	
+        PolvF2 R = new PolvF2(gm);
         int dimensionA = this.getDimension();
         
         while (k < dimensionA &&  cab != null) {            
@@ -328,12 +333,14 @@ public class PolvF1 {
             }
         }
         
-        if(k != (cdUtilesA - 1)){
-            sw = false;
+        //Ciclo para datos en 0 de PolvF1 y no se hayan contado en el while, 
+        //por ser iguales a cero despues de coeficientes utiles
+        while(k < cdUtilesA && this.getDato(k) == 0) {
+        	k++;
         }
         
-        if((j+1) != (cdUtilesB - 1)){
-            sw = false;
+        if(sw && ((k != cdUtilesA) || (j != cdUtilesB))) {
+        	sw = false;
         }
         
     	return sw;
