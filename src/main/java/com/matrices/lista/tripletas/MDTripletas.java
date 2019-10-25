@@ -97,10 +97,10 @@ public class MDTripletas {
             }
         }else{
             if((listaTri[0][2]+1) == Nt){
-                //redimensionar
+                redimensionar();
             }
             
-            for (int m = (int) listaTri[0][2]; m >= k; m--) {
+            for (int m = (int) listaTri[0][2]+1; m >= k; m--) {
                 listaTri[m+1][0] = listaTri[m][0];
                 listaTri[m+1][1] = listaTri[m][1];
                 listaTri[m+1][2] = listaTri[m][2];
@@ -111,6 +111,17 @@ public class MDTripletas {
             
             listaTri[0][2] = listaTri[0][2] + 1;
         }
+    }
+    
+    public void redimensionar() {
+    	int filas = (int) listaTri[0][2] + 2;
+    	float[][] aux = new float [filas][3];
+    	for (int k = 0; k < listaTri[0][2]+1; k++) {
+			aux[k][0] = listaTri[k][0];
+			aux[k][1] = listaTri[k][1];
+			aux[k][2] = listaTri[k][2];
+		}
+    	listaTri = aux;
     }
     
     public void ingresarDato(){
