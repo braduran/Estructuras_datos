@@ -1,5 +1,4 @@
-
-package com.matrices.lista.tripletas;
+package com.matrices.lista.ListasF2;
 
 import javax.swing.JOptionPane;
 
@@ -9,8 +8,8 @@ public class Main {
         int nc = Integer.parseInt(JOptionPane.showInputDialog("Ingrese numero de columnas"));
         int cd = Integer.parseInt(JOptionPane.showInputDialog("Ingrese cantidad de datos"));
         
-        MDTripletas mdt = new MDTripletas(nf, nc, cd);
-        mdt.ingresarDato();
-        mdt.mostrar();
+        MDListaF2 mdf2 = new MDListaF2(nf, nc);
+        mdf2.ingresarDatos(cd);
+        mdf2.mostrar();
     }
 }

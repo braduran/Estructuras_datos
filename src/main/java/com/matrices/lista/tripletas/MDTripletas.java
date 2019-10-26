@@ -25,7 +25,7 @@ public class MDTripletas {
         this.listaTri[(int)d][2] = d;
     }
     
-    public void mostar(){
+    public void mostrar(){
         String salida = "<html><table border='1'>";
         int t = 1;
         
