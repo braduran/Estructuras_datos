@@ -1,5 +1,7 @@
 package com.arboles.binarios.busqueda;
 
+import javax.swing.JOptionPane;
+
 public class ArbolBB {
     private Nodo raiz;
     
@@ -70,17 +72,81 @@ public class ArbolBB {
     
     public void buscar(String cedula){
         Nodo p = raiz;
+        boolean sw = false;
+        String mensaje = null;
         
-        if(p != null){
-            if(p.getPersona().getCedula().compareTo(cedula) < 0){ //a < b
-                buscar(p.getLI().getPersona().getCedula());
+        while (p != null && !sw) {            
+            if(cedula.compareTo(p.getPersona().getCedula()) > 0){
+                p = p.getLD();
             }else{
-                if(p.getPersona().getCedula().compareTo(cedula) > 0){ // a > b
-                    buscar(p.getLD().getPersona().getCedula());
+                if(cedula.compareTo(p.getPersona().getCedula()) < 0){
+                    p = p.getLI();
                 }else{
-                    System.out.println(p.getPersona().toString());
+                    sw = true;
                 }
             }
         }
+        
+        if(sw){
+            mensaje = "<html>"
+                    +"<table border='1'>"
+                        +"<tr>"
+                            +"<th>Cedula</th>"
+                            +"<th>Nombre</th>"
+                            +"<th>Edad</th>"
+                        +"<tr>"
+                        +"<tr>"
+                            +"<td>"+ p.getPersona().getCedula() +"</td>"
+                            +"<td>"+ p.getPersona().getNombre() +"</td>"
+                            +"<td>"+ p.getPersona().getEdad()+"</td>"
+                        +"</tr>"
+                    +"</table>"
+                    + "</html>";
+        }else{
+            mensaje = "La persona no existe";
+        }
+        JOptionPane.showMessageDialog(null, mensaje);
+    }
+    
+    public int altura(Nodo r){
+        if(r != null){
+            int pi = altura(r.getLD());
+            int pd = altura(r.getLI());
+
+            if (pi > pd){ 
+               return (pi + 1);
+            }else{
+               return (pd + 1);
+            }
+        }else{
+            return 0;
+        }
+    }
+    
+    public void modificar(Persona per){
+        Nodo p = raiz;
+        boolean sw = false;
+        String mensaje = null;
+        
+        while (p != null && !sw) {            
+            if(per.getCedula().compareTo(p.getPersona().getCedula()) > 0){
+                p = p.getLD();
+            }else{
+                if(per.getCedula().compareTo(p.getPersona().getCedula()) < 0){
+                    p = p.getLI();
+                }else{
+                    sw = true;
+                }
+            }
+        }
+        
+        if(sw){
+            p.getPersona().setNombre(per.getNombre());
+            p.getPersona().setEdad(per.getEdad());
+            mensaje = "Persona modificada con exito...";
+        }else{
+            mensaje = "La persona no existe";
+        }
+        JOptionPane.showMessageDialog(null, mensaje);
     }
 }
