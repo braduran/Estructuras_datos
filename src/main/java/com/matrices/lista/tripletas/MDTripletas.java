@@ -52,8 +52,8 @@ public class MDTripletas {
             k++;
         }
         
-        while ((k < tripUtiles) && (listaTri[k][0] <= f) 
-                && (listaTri[k][1] < 0) && (listaTri[0][2] != 0)) {            
+        while ((k < tripUtiles) && (listaTri[k][0] == f) && (listaTri[k][1] < c) 
+        		&& (listaTri[k][2] != 0)) {            
             k++;
         }
         

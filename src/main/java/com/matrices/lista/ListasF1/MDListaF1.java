@@ -48,7 +48,7 @@ public class MDListaF1 {
             q = p.getLigaFila();
             salida += "<tr>";
             for (j = 0; j < cab.getColumna(); j++) {
-                if(q.getFila() == k && q.getColumna() == j){
+                if(q.getFila() == k && q.getColumna() == j && q.getDato() != 0){
                     salida += "<td color='blue'>" + q.getDato() + "</td>";
                     q = q.getLigaFila();
                 }else{
@@ -60,7 +60,7 @@ public class MDListaF1 {
             
         }
         salida += "</table></html>";
-        JOptionPane.showMessageDialog(null, "Datos de la matriz: \n" + salida);
+        JOptionPane.showMessageDialog(null,  salida, "Datos de la matriz F1 " + cab.getFila() + "x" +  cab.getColumna(), 1);
     }
     
     public void insertarDato(int f, int c, float d){
@@ -72,8 +72,9 @@ public class MDListaF1 {
         antF = p;
         q = p.getLigaFila();
         
-        while (q != p  && q.getColumna() < c) {            
-            q = q.getLiga();
+        while (q != p  && q.getColumna() < c) {
+        	antF = q;
+            q = q.getLigaFila();
         }
         p = cab.getLiga();
         
@@ -84,7 +85,8 @@ public class MDListaF1 {
         q = p.getLigaCol();
         
         while(q != p && p.getFila() < f){
-            q = q.getLiga();
+        	antC = q;
+            q = q.getLigaCol();
         }
         
         if(q != p && q.getFila() == f && q.getColumna() == c){
@@ -100,7 +102,7 @@ public class MDListaF1 {
         }else{
             x = new NodoF1(f, c, d);
             x.setLigaFila(antF.getLigaFila());
-            antC.setLigaFila(x);
+            antF.setLigaFila(x);
             x.setLigaCol(antC.getLigaCol());
             antC.setLigaCol(x);
         }
@@ -110,12 +112,13 @@ public class MDListaF1 {
         NodoF1 p = cab.getLiga(), q, antF, antC, x;
         
         while (p != cab && p.getFila() < f) {            
-            p = p.getLiga();
+            p = p .getLiga();
         }
         antF = p;
         q = p.getLigaFila();
         
-        while (q != p && q.getColumna() < c) {            
+        while (q != p  && q.getColumna() < c) {
+        	antF = q;
             q = q.getLigaFila();
         }
         p = cab.getLiga();
@@ -127,6 +130,7 @@ public class MDListaF1 {
         q = p.getLigaCol();
         
         while(q != p && p.getFila() < f){
+        	antC = q;
             q = q.getLigaCol();
         }
         
@@ -151,7 +155,7 @@ public class MDListaF1 {
             
             if(f >= 0 && f < cab.getFila() && c >= 0 && c < cab.getColumna()){
                 d = Float.parseFloat(JOptionPane.showInputDialog("Ingrese dato"));
-                this.almacenarDato(f, c, d);
+                this.insertarDato(f, c, d);
             }else{
                 JOptionPane.showMessageDialog(null, "La posicion no es valida");
             }

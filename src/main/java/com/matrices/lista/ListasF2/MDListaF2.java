@@ -2,6 +2,8 @@ package com.matrices.lista.ListasF2;
 
 import javax.swing.JOptionPane;
 
+import com.matrices.lista.ListasF1.NodoF1;
+
 public class MDListaF2 {
     
     private NodoF2 cab;
@@ -55,11 +57,23 @@ public class MDListaF2 {
     }
     
     public void mostrar(){
-        NodoF2 p = cab.getLigaFila();
-        while (p != cab) {            
-           System.out.println(p.getDato());
-           p = p.getLigaFila();
+    	NodoF2 p = cab.getLigaFila(), q;
+        String salida = "<html><table border='1'>";
+        
+        for (int k = 0; k < cab.getFila(); k++) {
+        	salida += "<tr>";
+    		for(int j = 0; j < cab.getColumna(); j++) {
+    			if(k == p.getFila() && j == p.getColumna()) {
+    				salida += "<td color='orange'>" + p.getDato() + "</td>";
+    				p = p.getLigaFila();
+    			}else {
+    				salida += "<td>0.0</td>";
+    			}
+    		}
+        	salida += "</tr>";
         }
+        salida += "</table></html>";
+        JOptionPane.showMessageDialog(null,  salida, "Datos de la matriz F2 " + cab.getFila() + "x" +  cab.getColumna(), 1);
     }
     
     
