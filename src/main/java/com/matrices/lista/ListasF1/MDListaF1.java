@@ -10,6 +10,10 @@ public class MDListaF1 {
         this.cab = crearCabezas(nf, nc);
     }
     
+    public NodoF1 getCab(){
+    	return cab;
+    }
+    
     private NodoF1 crearCabezas(int nf, int nc){
         int n,k;
         NodoF1 p, x, ult;

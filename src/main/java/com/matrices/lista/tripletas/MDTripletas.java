@@ -2,6 +2,9 @@ package com.matrices.lista.tripletas;
 
 import javax.swing.JOptionPane;
 
+import com.matrices.lista.ListasF1.MDListaF1;
+import com.matrices.lista.ListasF2.MDListaF2;
+
 public class MDTripletas {
 
    private int NFilas, NCol, Nt;
@@ -122,6 +125,24 @@ public class MDTripletas {
 			aux[k][2] = listaTri[k][2];
 		}
     	listaTri = aux;
+    }
+    
+    //Tripletas x F1 = F2
+    public MDListaF2 multiplicarConF1(MDListaF1 F1) {
+		int columnasTrip = (int) listaTri[0][1];
+		int filasF1 = (int) F1.getCab().getFila();
+    	
+		if(columnasTrip == filasF1) {
+			for (int k = 1; k <= listaTri[0][2]; k++) {
+	    		int fila = (int) listaTri[k][0];
+	    		int columna = (int) listaTri[k][1];
+	    		
+			}
+    	}else {
+    		JOptionPane.showMessageDialog(null, "El numero de columnas la matriz de tripletas, "
+    				+ "debe ser el mismo que el numero de filas de la matriz en forma 1");
+    	}
+    	return null;
     }
     
     public void ingresarDato(){
