@@ -4,6 +4,7 @@ import javax.swing.JOptionPane;
 
 import com.matrices.lista.ListasF1.MDListaF1;
 import com.matrices.lista.ListasF2.MDListaF2;
+import com.matrices.lista.ListasF2.NodoF2;
 
 public class MDTripletas {
 
@@ -127,16 +128,27 @@ public class MDTripletas {
     	listaTri = aux;
     }
     
-    //Tripletas x F1 = F2
-    public MDListaF2 multiplicarConF1(MDListaF1 F1) {
+    //Tripletas x F2 = F1
+    public MDListaF1 multiplicarConF1(MDListaF2 F2) {
+    	int fila, columna, dato;
+    	NodoF2 p = F2.getCab();
+    	boolean sw = false;
+    	MDListaF1 matrizResultado = new MDListaF1(this.NFilas, F2.getCab().getColumna()); 
+    	
 		int columnasTrip = (int) listaTri[0][1];
-		int filasF1 = (int) F1.getCab().getFila();
+		int filasF1 = (int) F2.getCab().getFila();
     	
 		if(columnasTrip == filasF1) {
 			for (int k = 1; k <= listaTri[0][2]; k++) {
-	    		int fila = (int) listaTri[k][0];
-	    		int columna = (int) listaTri[k][1];
+	    		fila = (int) listaTri[k][0];
+	    		columna = (int) listaTri[k][1];
+	    		dato = (int) listaTri[k][2];
 	    		
+	    		while(p != F2.getCab() && !sw) {
+	    			if(p.getFila() == fila && p.getColumna() == columna){
+	    				
+	    			}
+	    		}
 			}
     	}else {
     		JOptionPane.showMessageDialog(null, "El numero de columnas la matriz de tripletas, "

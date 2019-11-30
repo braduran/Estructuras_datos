@@ -14,6 +14,10 @@ public class MDListaF2 {
         cab.setLigaCol(cab);
     }
     
+    public NodoF2 getCab() {
+    	return this.cab;
+    }
+    
     public void insertarDato(int f, int c, float d){
         NodoF2 p, q, antF = cab, antC = cab;
         p = cab.getLigaFila();
