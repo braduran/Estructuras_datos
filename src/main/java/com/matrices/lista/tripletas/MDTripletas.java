@@ -130,29 +130,44 @@ public class MDTripletas {
     
     //Tripletas x F2 = F1
     public MDListaF1 multiplicarConF1(MDListaF2 F2) {
-    	int fila, columna, dato;
-    	NodoF2 p = F2.getCab();
+    	int fila, columna, dato, k;
+    	NodoF2 p = F2.getCab().getLigaFila();
     	boolean sw = false;
-    	MDListaF1 matrizResultado = new MDListaF1(this.NFilas, F2.getCab().getColumna()); 
+        int suma[][] = new int[NFilas][F2.getCab().getColumna()];
+    	MDListaF1 matrizResultado = null;
     	
-		int columnasTrip = (int) listaTri[0][1];
-		int filasF1 = (int) F2.getCab().getFila();
-    	
-		if(columnasTrip == filasF1) {
-			for (int k = 1; k <= listaTri[0][2]; k++) {
-	    		fila = (int) listaTri[k][0];
-	    		columna = (int) listaTri[k][1];
-	    		dato = (int) listaTri[k][2];
-	    		
-	    		while(p != F2.getCab() && !sw) {
-	    			if(p.getFila() == fila && p.getColumna() == columna){
-	    				
-	    			}
-	    		}
-			}
+        int columnasTrip = (int) listaTri[0][1];
+        int filasF2 = (int) F2.getCab().getFila();
+
+        if(columnasTrip == filasF2) {
+            matrizResultado = new MDListaF1(this.NFilas, F2.getCab().getColumna()); 
+            
+            for (k = 1; k <= listaTri[0][0]; k++) {
+                fila = (int) listaTri[k][0];
+                columna = (int) listaTri[k][1];
+                dato = (int) listaTri[k][2];
+                
+                if(columna == p.getFila()){
+                    suma[fila][p.getColumna()] += (dato * (int) p.getDato());
+                    p = p.getLigaCol();
+                }
+            }
+            
+            for (int j = 0; j < k; j++) {
+                fila = (int) listaTri[j][0];
+                columna = (int) listaTri[j][1];
+                dato = (int) listaTri[j][2];
+                
+                if(columna == p.getFila()){
+                    suma[fila][p.getColumna()] += (dato * (int) p.getDato());
+                    p = p.getLigaCol();
+                }
+            }
+            
+            System.out.println(suma.length);
     	}else {
-    		JOptionPane.showMessageDialog(null, "El numero de columnas la matriz de tripletas, "
-    				+ "debe ser el mismo que el numero de filas de la matriz en forma 1");
+            JOptionPane.showMessageDialog(null, "El numero de columnas la matriz de tripletas, "
+                            + "debe ser el mismo que el numero de filas de la matriz en forma 2");
     	}
     	return null;
     }
