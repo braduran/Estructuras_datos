@@ -130,9 +130,9 @@ public class MDTripletas {
     
     //Tripletas x F2 = F1
     public MDListaF1 multiplicarConF1(MDListaF2 F2) {
-    	int fila, columna, dato, k;
-    	NodoF2 p = F2.getCab().getLigaFila();
+    	int fila=0, columna, dato, l = 1;
     	boolean sw = false;
+    	NodoF2 p = F2.getCab().getLigaFila();
         int suma[][] = new int[NFilas][F2.getCab().getColumna()];
     	MDListaF1 matrizResultado = null;
     	
@@ -142,29 +142,41 @@ public class MDTripletas {
         if(columnasTrip == filasF2) {
             matrizResultado = new MDListaF1(this.NFilas, F2.getCab().getColumna()); 
             
-            for (k = 1; k <= listaTri[0][0]; k++) {
-                fila = (int) listaTri[k][0];
-                columna = (int) listaTri[k][1];
-                dato = (int) listaTri[k][2];
-                
-                if(columna == p.getFila()){
-                    suma[fila][p.getColumna()] += (dato * (int) p.getDato());
-                    p = p.getLigaCol();
-                }
+            
+            for(int x = 0; x < this.NFilas; x++) { //FilasA
+            	if(sw) {
+            		p = p.getLigaFila();
+            	}
+            	sw = false;
+            	
+            	for(int y = 0; y < F2.getCab().getColumna(); y++) { //ColumnasB
+            		if(sw) {
+                		l = l - this.NCol;
+                	}
+            		
+            		for (int z = 0; z < this.NCol; z++) {
+						
+            			fila = (int) listaTri[l][0];
+                        columna = (int) listaTri[l][1];
+                        dato = (int) listaTri[l][2];
+                        
+                        if(columna == p.getFila()){
+                        	suma[fila][p.getColumna()] += (dato * (int) p.getDato());
+                            p = p.getLigaCol();
+                        }
+            			l++;
+					}
+            		sw = true;
+            	}
             }
             
-            for (int j = 0; j < k; j++) {
-                fila = (int) listaTri[j][0];
-                columna = (int) listaTri[j][1];
-                dato = (int) listaTri[j][2];
-                
-                if(columna == p.getFila()){
-                    suma[fila][p.getColumna()] += (dato * (int) p.getDato());
-                    p = p.getLigaCol();
-                }
-            }
+            for (int i = 0; i < suma.length; i++) { //Filas
+				for (int j = 0; j < suma[0].length; j++) { //Columnas
+					matrizResultado.insertarDato(i, j, suma[i][j]);
+				}
+			}
             
-            System.out.println(suma.length);
+            matrizResultado.mostrar();
     	}else {
             JOptionPane.showMessageDialog(null, "El numero de columnas la matriz de tripletas, "
                             + "debe ser el mismo que el numero de filas de la matriz en forma 2");
