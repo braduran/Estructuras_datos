@@ -37,16 +37,20 @@ public class ArbolBB {
         return this.raiz;
     }
     
+    public void setRaiz(Nodo r){
+        this.raiz = r;
+    }
+    
     public void insertar(Persona per){
         Nodo P = raiz, ant = null;
         boolean sw = false;
         
         while (P != null && !sw) {            
             ant = P;
-            if(per.getCedula().compareTo(P.getPersona().getCedula()) > 0){ // a > b
+            if(per.getCedula() > P.getPersona().getCedula()){ // a > b
                 P = P.getLD();
             }else{
-                if(per.getCedula().compareTo(P.getPersona().getCedula()) < 0){ // a < b
+                if(per.getCedula() < P.getPersona().getCedula()){ // a < b
                     P = P.getLI();
                 }else{
                     sw = true;
@@ -61,7 +65,7 @@ public class ArbolBB {
             if(raiz == null){
                 raiz = P;
             }else{
-                if(per.getCedula().compareTo(ant.getPersona().getCedula()) < 0){ // a < b
+                if(per.getCedula() < ant.getPersona().getCedula()){ // a < b
                     ant.setLI(P);
                 }else{
                     ant.setLD(P);
@@ -70,16 +74,16 @@ public class ArbolBB {
         }
     }
     
-    public void buscar(String cedula){
+    public void buscar(int cedula){
         Nodo p = raiz;
         boolean sw = false;
         String mensaje = null;
         
         while (p != null && !sw) {            
-            if(cedula.compareTo(p.getPersona().getCedula()) > 0){
+            if(cedula > p.getPersona().getCedula()){
                 p = p.getLD();
             }else{
-                if(cedula.compareTo(p.getPersona().getCedula()) < 0){
+                if(cedula < p.getPersona().getCedula()){
                     p = p.getLI();
                 }else{
                     sw = true;
@@ -129,10 +133,10 @@ public class ArbolBB {
         String mensaje = null;
         
         while (p != null && !sw) {            
-            if(per.getCedula().compareTo(p.getPersona().getCedula()) > 0){
+            if(per.getCedula() > p.getPersona().getCedula()){
                 p = p.getLD();
             }else{
-                if(per.getCedula().compareTo(p.getPersona().getCedula()) < 0){
+                if(per.getCedula() < p.getPersona().getCedula()){
                     p = p.getLI();
                 }else{
                     sw = true;
@@ -143,10 +147,71 @@ public class ArbolBB {
         if(sw){
             p.getPersona().setNombre(per.getNombre());
             p.getPersona().setEdad(per.getEdad());
-            mensaje = "Persona modificada con exito...";
+            mensaje = "Persona modificada con exito :)";
         }else{
             mensaje = "La persona no existe";
         }
         JOptionPane.showMessageDialog(null, mensaje);
     }
+    
+    public void eliminar(int cedula) {
+    	Nodo p = raiz, ant = null;
+        boolean sw = false;
+        String mensaje = null;
+        
+        while (p != null && !sw) {
+            if(cedula > p.getPersona().getCedula()){
+            	ant = p;
+                p = p.getLD();
+            }else{
+                if(cedula < p.getPersona().getCedula()){
+                	ant = p;
+                    p = p.getLI();
+                }else{
+                    sw = true;
+                }
+            }
+        }
+        
+        if(sw) {
+        	if(p != raiz) {
+	        	if(p.getLD() == null && p.getLI() == null) {
+	        		ant.setLD(null);
+	        		ant.setLI(null);
+	        	}else if(p.getLD() != null && p.getLI() == null) {
+	        		ant.setLI(p.getLD());
+	        	}else if(p.getLD() == null && p.getLI() != null) {
+	        		ant.setLI(p.getLI());
+	        	}else if(p.getLD() != null && p.getLI() != null) {
+	        		if(ant.getLD() == p) {
+		        		ant.setLD(p.getLD());
+		        		ant.getLD().setLI(p.getLI());
+	        		}else if(ant.getLI() == p) {
+	        			ant.setLI(p.getLD());
+	        			ant.getLI().setLI(p.getLI());
+	        		}
+	        	}
+	        	mensaje = "Persona con cedula " + p.getPersona().getCedula() + " eliminada exitosamente :)";
+        	}else {
+        		if(p.getLD() != null && p.getLD().getLD() != null && p.getLD().getLI() != null) {
+        			Nodo ld = p.getLD();
+            		Nodo li = p.getLI();
+            		Nodo ldd = p.getLD().getLD();
+            		Nodo ldi = p.getLD().getLI();
+            		
+            		ldd.setLI(ldi);
+            		ld.setLD(ldd);
+            		ld.setLI(li);
+            		this.setRaiz(ld);
+            		mensaje = "Nueva raiz " + this.getRaiz().getPersona().getCedula() + " :)";
+        		}
+        	}
+        	
+        }else {
+        	mensaje = "La persona no existe";
+        }
+        
+        JOptionPane.showMessageDialog(null, mensaje);
+    }
 }
+ 

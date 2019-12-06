@@ -2,21 +2,21 @@
 package com.arboles.binarios.busqueda;
 
 public class Persona {
-    private String cedula;
+    private int cedula;
     private String nombre;
     private int edad;
 
-    public Persona(String cedula, String nombre, int edad) {
+    public Persona(int cedula, String nombre, int edad) {
         this.cedula = cedula;
         this.nombre = nombre;
         this.edad = edad;
     }
     
-    public String getCedula() {
+    public int getCedula() {
         return cedula;
     }
 
-    public void setCedula(String cedula) {
+    public void setCedula(int cedula) {
         this.cedula = cedula;
     }
 
