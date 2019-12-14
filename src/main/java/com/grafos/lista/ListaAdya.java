@@ -7,29 +7,29 @@ public class ListaAdya {
 	public ListaAdya(int vertices) {
 		this.n = vertices;
 		lista = new Nodo[vertices+1];
-		for (int i = 0; i <= vertices; i++) {
-			Nodo nodo = new Nodo(i);
-			lista[i] = nodo;
-		}
 	}
 	
-	public void insertarVertice(int base, int vertice) {
-		Nodo nuevo = new Nodo(vertice);
+	public void insertarVertice(int i, int vertice) {
+		Nodo nuevo;
 		
-		if(lista[base] == null){
-			lista[base] = nuevo;
-		}else {
-			Nodo actual = lista[base];
-			while(actual.getLiga() != null) {
-				actual = actual.getLiga();
+		if(i <= n){
+			nuevo = new Nodo(vertice);
+			
+			if(lista[i] == null) {
+				lista[i] = nuevo;
+			}else {
+				Nodo actual = lista[i];
+				while(actual.getLiga() !=  null){
+					actual = actual.getLiga();
+				}
+				actual.setLiga(nuevo);
 			}
-			actual.setLiga(nuevo);
 		}
 	}
 	
 	public void mostrarGrafo(){
-		for(int i = 0; i <= this.n; i++){
-			Nodo actual = lista[i].getLiga();
+		for(int i = 0; i < this.n; i++){
+			Nodo actual = lista[i];
 			
 			while(actual != null){
 				System.out.printf("%d -> %d\n", i, actual.getVertice());

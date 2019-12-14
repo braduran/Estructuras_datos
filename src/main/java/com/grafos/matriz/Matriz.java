@@ -3,10 +3,12 @@ package com.grafos.matriz;
 public class Matriz {
 	private int n;
 	private int[][] matriz;
+	private int[] visitado;
 	
 	public Matriz(int n) {
 		this.n = n;
 		matriz = new int[n][n];
+		visitado = new int[n];
 	}
 	
 	public void agregar(int i, int j){
@@ -38,5 +40,18 @@ public class Matriz {
 			}
 		}
 		return c;
+	}
+	
+	public void DFS_Madya(int v) {
+		visitado[v] = 1;
+		System.out.println(v);
+		
+		for (int i = 0; i < n; i++) {
+			if(matriz[v][i] == 1) {
+				if(visitado[i] == 0) {
+					DFS_Madya(i);
+				}
+			}
+		}
 	}
 }
