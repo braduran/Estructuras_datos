@@ -1,5 +1,7 @@
 package com.grafos.matriz;
 
+import javax.swing.JOptionPane;
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -27,5 +29,6 @@ public class Main {
 	    matriz.agregar(4, 4);
 	    
 	    matriz.imprimir();
+	    JOptionPane.showMessageDialog(null, matriz.gradoVertice(2));
 	}
 }

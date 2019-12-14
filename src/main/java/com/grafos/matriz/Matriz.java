@@ -26,4 +26,17 @@ public class Matriz {
             System.out.println();
         }  
     }
+	
+	public int gradoVertice(int vertice) {
+		int c = 0;
+		
+		if(vertice <= n) {
+			for (int i = 0; i < n; i++) {
+				if(matriz[vertice][i] == 1) {
+					c++;
+				}
+			}
+		}
+		return c;
+	}
 }
